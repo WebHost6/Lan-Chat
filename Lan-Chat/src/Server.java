@@ -41,6 +41,7 @@ public class Server {
         
         try (ServerSocket serverSocket = new ServerSocket(portNum)){
             System.out.println(portNum);
+            
         } catch (IOException e) {
             System.err.println("could not start server on port " + portNum);
             System.exit(1);
