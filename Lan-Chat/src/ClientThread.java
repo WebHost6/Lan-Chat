@@ -27,7 +27,13 @@ public class ClientThread implements Runnable
             while (!socket.isClosed()) {
                 if (scanner.hasNextLine()) {
                     String message = scanner.nextLine(); // message from the client
-                    writer.println(message);
+                    
+                    // broadcasting the server
+                    for (ClientThread client: server.getClients()) {
+                        if (client.out != null) {
+                            client.out.println(message + "\n");
+                        }
+                    }
                 }
             }
         } catch(IOException e) {

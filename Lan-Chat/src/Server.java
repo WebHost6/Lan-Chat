@@ -8,23 +8,23 @@ public class Server {
     private int serverPort;
 
     // maximum amount of clients allowed -- changeable
-    private List<Client> clients;
+    private List<ClientThread> clients;
     
     public Server(int portNum)
     {
         this.serverPort = portNum;
     }
+
+    // getClients() returns clients
+    public List<ClientThread> getClients()
+    {
+        return clients;
+    }
     
     public static void main(String [] args)
     {
-        try (ServerSocket serverSocket = new ServerSocket(portNum)){
-            System.out.println(portNum);
-        } catch (IOException e) {
-            System.err.println("could not start server on port " + portNum);
-            System.exit(1);
-        }
-
-        Server server = new Server();
+        Server server = new Server(portNum);
+        server.start();
     }
 
     private void connect(ServerSocket serverSocket)
@@ -35,6 +35,16 @@ public class Server {
         }
     }
 
-    
+    private void start()
+    {
+        clients = new ArrayList<ClientThread>();
+        
+        try (ServerSocket serverSocket = new ServerSocket(portNum)){
+            System.out.println(portNum);
+        } catch (IOException e) {
+            System.err.println("could not start server on port " + portNum);
+            System.exit(1);
+        }
+    }
     
 }
